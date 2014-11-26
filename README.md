@@ -11,11 +11,11 @@ and actually reusing code between templates becomes a frustrating copypasta exer
 ## My God, it's full of hashes.
 
 From another perspective these JSON documents are actually just hashes, and with a minimal DSL we
-can build these hashes programmatically. [SparkleFormation](https://github.com/sparkleformation/sparkle_formation/) provides a loose Ruby DSL for merging
+can build these hashes programmatically. [SparkleFormation](https://github.com/sparkleformation/sparkle_formation/) provides a Ruby DSL for merging
 and compiling hashes into CFN templates, and helpers which invoke CloudFormation's [intrinsic functions]()
 (e.g. Ref, Attr, Join, Map).
 
-Built on SparkleFormation's DSL implementation is intentionally loose, imposing little of its own
+SparkleFormation's DSL implementation is intentionally loose, imposing little of its own
 opinion on how your template should be constructed. Provided you are already familiar with
 CloudFormation template concepts and some minimal ammount of Ruby, the rest is merging hashes.
 
