@@ -1,4 +1,4 @@
-SparkleFormation.new(:vpc_instance_layered).load(:base).overrides do
+SparkleFormation.new(:vpc_instance_layered).load(:compute_base).overrides do
 
   description 'make an instance, based on region, ami, subnet, and security group'
 
@@ -7,17 +7,6 @@ SparkleFormation.new(:vpc_instance_layered).load(:base).overrides do
     parameters(r.to_sym) do
       type 'String'
     end
-  end
-
-  parameters(:instance_type) do
-    type 'String'
-    allowed_values %w( m1.small m1.large )
-    default 'm1.small'
-  end
-
-  %w( security_group_id subnet_id ).each do |p|
-    parameters._delete(p.to_sym)
-    outputs._delete(p.to_sym)
   end
 
   resources(:instance_security_group) do
