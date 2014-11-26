@@ -1,4 +1,4 @@
-SparkleFormation.new(:vpc_instance_layered).load(:compute_base).overrides do
+SparkleFormation.new(:vpc_instance_layered).load(:base, :compute_base).overrides do
 
   description 'make an instance, based on region, ami, subnet, and security group'
 

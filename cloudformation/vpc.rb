@@ -1,4 +1,4 @@
-SparkleFormation.new(:coolapp_vpc).load(:vpc).overrides do
+SparkleFormation.new(:coolapp_vpc).load(:base, :vpc).overrides do
 
   parameters(:public_subnet_availability_zone) do
     type 'String'
