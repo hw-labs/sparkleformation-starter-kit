@@ -388,10 +388,7 @@ Since SparkleFormation is Ruby, we can get a little fancy. Let's say we want to 
 SparkleFormation.build do
   set!('AWSTemplateFormatVersion', '2010-09-09')
     
-  octets = [
-         ENV['VPC_SUBNET'].split('.')[0],
-         ENV['VPC_SUBNET'].split('.')[1]
-         ].join('.')
+  octets = ENV['VPC_SUBNET].split('.').slice(0,2).join('.')
 
   subnets = %w(1 2 3)
 
