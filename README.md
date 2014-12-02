@@ -33,7 +33,7 @@ existing VPC subnet and security group:
     "Parameters" : {
 
         "KeyName" : {
-            "Description" : "Name of and existing EC2 KeyPair to enable SSH access to the instance",
+            "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instance",
             "Type" : "String"
         },
 
@@ -49,7 +49,7 @@ existing VPC subnet and security group:
 
         "AmiId" : {
             "Type" : "String",
-            "Description" : "AMI You want to use"
+            "Description" : "AMI to use"
 
         },
 
@@ -114,7 +114,7 @@ SparkleFormation.new('vpc-instance').new do
   parameters do
     key_name do
       type 'String'
-      description 'Name of and existing EC2 KeyPair to enable SSH access to the instance'
+      description 'Name of an existing EC2 KeyPair to enable SSH access to the instance'
     end
     vpc_id do
       type 'String'
@@ -126,7 +126,7 @@ SparkleFormation.new('vpc-instance').new do
     end
     ami_id do
       type 'String'
-      description 'AMI You want to use'
+      description 'AMI to use'
     end
     security_group_id do
       type 'String'
