@@ -96,6 +96,20 @@ Where as components are loaded once at the instantiation of a SparkleFormation t
 more times throughout a template. They iteratively generate unique resources based on the name and optional
 configuration they are passed when inserted.
 
+In this example we insert a `launch_config` dynamic and pass it a config object containing a run list:
+
+```
+SparkleFormation.new('zookeeper').load(:base).overrides do
+  dynamic!(:launch_config, 'zookeeper', :run_list => ['role[zookeeperd]'])
+
+  ...
+
+end
+```
+
+The `launch_config` dynamic (not pictured) can then use intrisic functions like `Fn::Join` to insert data passed in the config deep inside a launch
+configuration, as in this case where we want our template to tell Chef what our run list should be.
+
 ### Registries
 
 Similar to dynamics, a registry entry can be inserted at any point in a SparkleFormation template or dynamic. e.g. a
