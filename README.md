@@ -70,13 +70,13 @@ existing VPC subnet and security group:
                 "SubnetId" : { "Ref" : "SubnetId" },
                 "KeyName" : { "Ref" : "KeyName" },
                 "UserData" : { "Fn::Base64" : { "Fn::Join" :
-                                                ["", [
-                                                    "#!/bin/bash -v\n",
-                                                    "curl http://aprivatebucket.s3.amazonaws.com/bootstrap.sh -o /tmp/bootstrap.sh\n",
-                                                    "bash /tmp/bootstrap.sh\n",
-                                                    "# If all went well, signal success\n",
-                                                    "cfn-signal -e $? -r 'Chef Server configuration'\n"
-                                                ]]}}
+                  ["", [
+                        "#!/bin/bash -v\n",
+                        "curl http://aprivatebucket.s3.amazonaws.com/bootstrap.sh -o /tmp/bootstrap.sh\n",
+                        "bash /tmp/bootstrap.sh\n",
+                        "# If all went well, signal success\n",
+                        "cfn-signal -e $? -r 'Chef Server configuration'\n"
+                    ]]}}
             }
         }
     },
