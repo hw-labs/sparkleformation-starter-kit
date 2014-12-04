@@ -16,8 +16,8 @@ and compiling hashes into CFN templates, and helpers which invoke CloudFormation
 SparkleFormation's DSL implementation is intentionally loose, imposing little of its own
 opinion on how your template should be constructed. Provided you are already familiar with
 CloudFormation template concepts and some minimal ammount of Ruby, the rest is merging hashes.
-## Templates
 
+## Templates
 Just as with CloudFormation, the template is the high-level object. In SparkleFormation we instantiate a new template
 like so:
 
@@ -60,7 +60,6 @@ SparkleFormation provides primatives to help you build templates out of reusable
 * Registries
 
 ### Components
-
 Here's a component we'll name `environment` which defines our allowed environment parameter values:
 
 ```ruby
@@ -91,7 +90,6 @@ end
 ```
 
 ### Dynamics
-
 Where as components are loaded once at the instantiation of a SparkleFormation template, dynamics are inserted one or
 more times throughout a template. They iteratively generate unique resources based on the name and optional
 configuration they are passed when inserted.
@@ -111,13 +109,11 @@ The `launch_config` dynamic (not pictured) can then use intrisic functions like 
 configuration, as in this case where we want our template to tell Chef what our run list should be.
 
 ### Registries
-
 Similar to dynamics, a registry entry can be inserted at any point in a SparkleFormation template or dynamic. e.g. a
 registry entry can be used to share the same metadata between both AWS::AutoScaling::LaunchConfiguration and
 AWS::EC2::Instance resources.
 
 ## Translating a ghost of AWS Advent past
-
 This JSON template from a previous AWS Advent article provisions a single EC2 instance into an
 existing VPC subnet and security group:
 
@@ -522,6 +518,6 @@ easing the development and operation of layered infrastructure.
 
 Here's some additional material to help you get started:
 
-* [SparkleFormation documentation](https://github.com/sparkleformation/sparkle_formation/tree/master/docs)
-* [AWS Advent SparkleFormation starter kit](https://github.com/hw-labs/aws-advent-2014)
+* [SparkleFormation documentation](https://github.com/sparkleformation/sparkle_formation/tree/master/docs) - more detailed discussion of the concepts introduced here, and mmore!
+* [AWS Advent SparkleFormation starter kit](https://github.com/hw-labs/aws-advent-2014) - an example SparkleFormation project repo containing some basic templates for deploying a VPC and an EC2 instance inside that VPC.
 * [Sean Porter's SparkleFormation ignite talk from DevOpsDays Vancouver 2014](https://www.youtube.com/watch?v=JnNWn3BoAcM&t=2h40m50s)
