@@ -387,7 +387,7 @@ Since SparkleFormation is Ruby, we can get a little fancy. Let's say we want to 
 ```ruby
 SparkleFormation.build do
   set!('AWSTemplateFormatVersion', '2010-09-09')
-    
+
   octets = ENV['VPC_SUBNET].split('.').slice(0,2).join('.')
 
   subnets = %w(1 2 3)
@@ -401,12 +401,12 @@ SparkleFormation.build do
     type 'String'
     description 'Existing VPC Route Table'
   end
-    
+
   subnets.each do |subnet|
     resources("vpc_subnet_#{subnet}".to_sym) do
     type 'AWS::EC2::Subnet'
     properties do
-      vpc_id ref![:vpc_id]
+      vpc_id ref!(:vpc_id)
       cidr_block octets + '.' + subnet + '.0/24'
       availability_zone 'us-west-2a'
     end
@@ -415,16 +415,17 @@ SparkleFormation.build do
   resources("vpc_subnet_route_table_association_#{subnet}".to_sym) do
     type 'AWS::EC2::SubnetRouteTableAssociation'
     properties do
-      route_table_id ref![:route_table_id]
+      route_table_id ref!(:route_table_id)
       subnet_id ref!("vpc_subnet_#{subnet}".to_sym)
     end
   end
 end
 ```
+
 Of course we could place the subnet and route table association resources into a dynamic, so that we could just call the dynamic with some config:
-```ruby 
+
+```ruby
 subnets.each do |subnet|
   dynamic!(:vpc_subnet, subnet, subnet_cidr => octets + '.' + subnet + '.0/24')
 end
 ```
-
