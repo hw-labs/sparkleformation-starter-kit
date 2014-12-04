@@ -282,6 +282,54 @@ Because the `base `component includes the parameters we need, the template no lo
 describes them. You may also notice that figures 3 and 4 both specify outputs; these are merged
 together when the hash is rendered into JSON.
 
+## Advanced Tips and Tricks
+Since SparkleFormation is Ruby, we can get a little fancy. Let's say we want to build 3 subnets into an existing VPC. If we know the VPC's /16 subnet we can provide it as an environment variable (`export VPC_SUBNET="10.1.0.0/16"`), and then call that variable in a template that generates additional subnets:
+```ruby
+SparkleFormation.build do
+  set!('AWSTemplateFormatVersion', '2010-09-09')
+
+  octets = ENV['VPC_SUBNET].split('.').slice(0,2).join('.')
+
+  subnets = %w(1 2 3)
+
+  parameters(:vpc_id) do
+    type 'String'
+    description 'Existing VPC ID'
+  end
+
+  parameters(:route_table_id) do
+    type 'String'
+    description 'Existing VPC Route Table'
+  end
+
+  subnets.each do |subnet|
+    resources("vpc_subnet_#{subnet}".to_sym) do
+    type 'AWS::EC2::Subnet'
+    properties do
+      vpc_id ref!(:vpc_id)
+      cidr_block octets + '.' + subnet + '.0/24'
+      availability_zone 'us-west-2a'
+    end
+  end
+
+  resources("vpc_subnet_route_table_association_#{subnet}".to_sym) do
+    type 'AWS::EC2::SubnetRouteTableAssociation'
+    properties do
+      route_table_id ref!(:route_table_id)
+      subnet_id ref!("vpc_subnet_#{subnet}".to_sym)
+    end
+  end
+end
+```
+
+Of course we could place the subnet and route table association resources into a dynamic, so that we could just call the dynamic with some config:
+
+```ruby
+subnets.each do |subnet|
+  dynamic!(:vpc_subnet, subnet, subnet_cidr => octets + '.' + subnet + '.0/24')
+end
+```
+
 ## Okay, this all sounds great! But how do I *operate* it?
 
 SparkleFormation by itself does not implement any means of sending its output to the CloudFormation
@@ -380,52 +428,4 @@ Similarly, if we use a SparkleFormation template to build our VPC, we can set a 
       value ref!(:route_table)
     end
   end
-```
-
-## Advanced Tips and Tricks
-Since SparkleFormation is Ruby, we can get a little fancy. Let's say we want to build 3 subnets into an existing VPC. If we know the VPC's /16 subnet we can provide it as an environment variable (`export VPC_SUBNET="10.1.0.0/16"`), and then call that variable in a template that generates additional subnets:
-```ruby
-SparkleFormation.build do
-  set!('AWSTemplateFormatVersion', '2010-09-09')
-
-  octets = ENV['VPC_SUBNET].split('.').slice(0,2).join('.')
-
-  subnets = %w(1 2 3)
-
-  parameters(:vpc_id) do
-    type 'String'
-    description 'Existing VPC ID'
-  end
-
-  parameters(:route_table_id) do
-    type 'String'
-    description 'Existing VPC Route Table'
-  end
-
-  subnets.each do |subnet|
-    resources("vpc_subnet_#{subnet}".to_sym) do
-    type 'AWS::EC2::Subnet'
-    properties do
-      vpc_id ref!(:vpc_id)
-      cidr_block octets + '.' + subnet + '.0/24'
-      availability_zone 'us-west-2a'
-    end
-  end
-
-  resources("vpc_subnet_route_table_association_#{subnet}".to_sym) do
-    type 'AWS::EC2::SubnetRouteTableAssociation'
-    properties do
-      route_table_id ref!(:route_table_id)
-      subnet_id ref!("vpc_subnet_#{subnet}".to_sym)
-    end
-  end
-end
-```
-
-Of course we could place the subnet and route table association resources into a dynamic, so that we could just call the dynamic with some config:
-
-```ruby
-subnets.each do |subnet|
-  dynamic!(:vpc_subnet, subnet, subnet_cidr => octets + '.' + subnet + '.0/24')
-end
 ```
