@@ -519,5 +519,5 @@ easing the development and operation of layered infrastructure.
 Here's some additional material to help you get started:
 
 * [SparkleFormation documentation](https://github.com/sparkleformation/sparkle_formation/tree/master/docs) - more detailed discussion of the concepts introduced here, and mmore!
-* [AWS Advent SparkleFormation starter kit](https://github.com/hw-labs/aws-advent-2014) - an example SparkleFormation project repo containing some basic templates for deploying a VPC and an EC2 instance inside that VPC.
+* [SparkleFormation starter kit](https://github.com/hw-labs/sparkleformation-starter-kit) - an example repository containing some basic templates for deploying a VPC and an EC2 instance inside that VPC.
 * [Sean Porter's SparkleFormation ignite talk from DevOpsDays Vancouver 2014](https://www.youtube.com/watch?v=JnNWn3BoAcM&t=2h40m50s)
