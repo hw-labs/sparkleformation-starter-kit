@@ -113,14 +113,10 @@ SparkleFormation.build do
     value ref!(:vpc)
   end
 
-  %w( vpc_cidr
-      public_route_table
-      private_route_table
-      internet_gateway
-    ).each do |x|
+  [ :vpc_cidr, :public_route_table, :private_route_table, :internet_gateway ].each do |x|
     outputs do
-      set!(x.to_sym) do
-        value ref!(x.to_sym)
+      set!(x) do
+        value ref!(x)
       end
     end
   end
