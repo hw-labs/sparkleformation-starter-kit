@@ -35,7 +35,7 @@ end
 ```
 
 In the above case we use the `_set` helper method because we are setting a top-level key with a string value.
-When we are working with hashes we can use we can use a block syntax, as shown here adding a parameter to the top-level
+When we are working with hashes we can use a block syntax, as shown here adding a parameter to the top-level
 `Parameters` hash that CloudFormation expects:
 
 ```
